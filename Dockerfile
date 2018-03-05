@@ -1,5 +1,8 @@
 FROM ubuntu:16.04
 
+ENV http_proxy=${http_proxy}
+ENV https_proxy=${https_proxy}
+
 RUN DEBIAN_FRONTEND=noninteractive && \
 	apt-get update && \
 	apt-get install -y zlib1g-dev automake autoconf git \
@@ -14,7 +17,7 @@ RUN MAKEFLAGS=' -j8' cd /gentle/ext && \
 
 ADD . /gentle
 RUN cd /gentle && pip install .
-RUN cd /gentle && ./install_models.sh
+RUN cd /gentle && ./install_language_model.sh && ./install.sh
 
 EXPOSE 8765
 
